@@ -1,5 +1,6 @@
 "  plugins via vim-plug
 call plug#begin('~/.local/share/nvim/plugged') " vim-plug syntax
+
 Plug 'scrooloose/nerdtree'             " File explorer within nvim
 Plug 'Yggdroot/indentLine'            " Muestra los niveles de indentación con lineas verticales 
 Plug 'joshdick/onedark.vim'            " color theme inspired in atom
@@ -21,13 +22,22 @@ Plug 'sophacles/vim-processing'        " Plugin para crear y ejecutar sketches d
 " openscad
 Plug 'salkin-mada/openscad.nvim'             " Plugin para sintaxis y ejecución de scripts openscad
 
-" autocomplete 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" autocomplete via Conquer of Completion
+Plug 'neoclide/coc.nvim', {'branch': 'release'}  " plugin for manage autocompletion for different languages, load extensions like VSCode and host language servers.
+
+Plug 'jiangmiao/auto-pairs'  " Plugin to automatically include final enclosing symbol with any starting one
+Plug 'alvan/vim-closetag'  " Similar to autopairs but for html-style tags
+
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " treesitter para hacer syntax highlighting mejorado
+
+Plug 'dense-analysis/ale' " Check syntax in Vim asynchronously and fix files, with Language Server Protocol (LSP) support
+Plug 'Chiel92/vim-autoformat'  " Format code with one button press (or automatically on save).
 
 call plug#end()
 
 " ////////////////////////////////////////////////////////////
         " plugin-based configurations
+" ////////////////////////////////////////////////////////////
 set nocompatible                       " Not compatible with vi
 
 filetype plugin on                     " Plugins are habilitated
@@ -63,6 +73,10 @@ set nu                  " Agrega numeración a las lineas de texto
 
 set tw=80           "  Automatic word wrapping by number of characters 
 
+" ////////////////////////////////////////////////////////////
+"                            CONQUEROR OF COMPLETION
+"                        Make your vim as smart as VSCode
+" ////////////////////////////////////////////////////////////
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
 set encoding=utf-8
@@ -231,3 +245,7 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+
+" ////////////////////////////////////////////////////////////
+
