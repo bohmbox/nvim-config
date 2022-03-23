@@ -7,7 +7,7 @@ Plug 'joshdick/onedark.vim'            " color theme inspired in atom
 Plug 'tpope/vim-surround'              " Plugin to easily modify brackets
 
 Plug 'sheerun/vim-polyglot'            " syntax highlighting for over 100 programming languages
-Plug 'dense-analysis/ale'              " syntax linting to check errors
+Plug 'dense-analysis/ale'              " syntax linting to check errors with Language Server Protocol (LSP) support
 
 " live coding
 Plug 'tidalcycles/vim-tidal'           " plugin to run tidal within nvim
@@ -30,7 +30,6 @@ Plug 'alvan/vim-closetag'  " Similar to autopairs but for html-style tags
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " treesitter para hacer syntax highlighting mejorado
 
-Plug 'dense-analysis/ale' " Check syntax in Vim asynchronously and fix files, with Language Server Protocol (LSP) support
 Plug 'Chiel92/vim-autoformat'  " Format code with one button press (or automatically on save).
 
 call plug#end()
@@ -246,6 +245,7 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
-
+autocmd FileType python let b:coc_root_patterns = ['.git','.env']
+set sessionoptions +=globals
 " ////////////////////////////////////////////////////////////
 
