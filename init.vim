@@ -1,14 +1,33 @@
 "  plugins via vim-plug
 call plug#begin('~/.local/share/nvim/plugged') " vim-plug syntax
 
-Plug 'scrooloose/nerdtree'             " File explorer within nvim
-Plug 'Yggdroot/indentLine'            " Muestra los niveles de indentación con lineas verticales 
-Plug 'joshdick/onedark.vim'            " color theme inspired in atom
-Plug 'tpope/vim-surround'              " Plugin to easily modify brackets
+" /////////////////////////////////
 
 Plug 'sheerun/vim-polyglot'            " syntax highlighting for over 100 programming languages
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " treesitter para hacer syntax highlighting mejorado
+
 Plug 'dense-analysis/ale'              " syntax linting to check errors with Language Server Protocol (LSP) support
 
+" autocomplete via Conquer of Completion
+Plug 'neoclide/coc.nvim', {'branch': 'release'}  " plugin for manage autocompletion for different languages, load extensions like VSCode and host language servers.
+
+" /////////////////////////////////
+" Plugins to improve user experience (the goal is VIM as a fully fledged IDE)
+Plug 'Chiel92/vim-autoformat'  " Format code with one button press (or automatically on save).
+
+Plug 'jiangmiao/auto-pairs'  " Plugin to automatically include final enclosing symbol with any starting one
+
+Plug 'tpope/vim-surround'              " Plugin to easily modify brackets
+
+Plug 'alvan/vim-closetag'  " Similar to autopairs but for html-style tags
+
+Plug 'scrooloose/nerdtree'             " File explorer within nvim
+
+Plug 'Yggdroot/indentLine'            " Muestra los niveles de indentación con lineas verticales 
+
+Plug 'joshdick/onedark.vim'            " color theme inspired in atom
+
+" /////////////////////////////////
 " live coding
 Plug 'tidalcycles/vim-tidal'           " plugin to run tidal within nvim
 Plug 'suzanje/foxdot-nvim'             " run FoxDot in vim
@@ -22,15 +41,15 @@ Plug 'sophacles/vim-processing'        " Plugin para crear y ejecutar sketches d
 " openscad
 Plug 'salkin-mada/openscad.nvim'             " Plugin para sintaxis y ejecución de scripts openscad
 
-" autocomplete via Conquer of Completion
-Plug 'neoclide/coc.nvim', {'branch': 'release'}  " plugin for manage autocompletion for different languages, load extensions like VSCode and host language servers.
+"LATEX AND VIM
+Plug 'lervag/vimtex' " Plugins to compile latex projects with vim
 
-Plug 'jiangmiao/auto-pairs'  " Plugin to automatically include final enclosing symbol with any starting one
-Plug 'alvan/vim-closetag'  " Similar to autopairs but for html-style tags
+"Dart/Flutter
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
+Plug 'natebosch/vim-lsc'
+Plug 'natebosch/vim-lsc-dart'
 
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " treesitter para hacer syntax highlighting mejorado
-
-Plug 'Chiel92/vim-autoformat'  " Format code with one button press (or automatically on save).
 
 call plug#end()
 
@@ -251,36 +270,118 @@ set sessionoptions +=globals
 " ////////////////////////////////////////////////////////////
 "                  NVIM - LATEX CONFIGURATION
 "               Dabbling with latex to improve my CV
-" " This is necessary for VimTeX to load properly. The "indent" is optional.
+" ////////////////////////////////////////////////////////////
+" " This is necessary for VimTeX to load properly. The 'indent' is optional.
 " Note that most plugin managers will do this automatically.
 filetype plugin indent on
 
 " This enables Vim's and neovim's syntax-related features. Without this, some
-" VimTeX features will not work (see ":help vimtex-requirements" for more
+" VimTeX features will not work (see ':help vimtex-requirements' for more
 " info).
 syntax enable
 
 " Viewer options: One may configure the viewer either by specifying a built-in
 " viewer method:
-let g:vimtex_view_method = 'zathura'
+let g:vimtex_view_method = 'mupdf'
 
 " Or with a generic interface:
 let g:vimtex_view_general_viewer = 'okular'
-let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+"let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
 
 " VimTeX uses latexmk as the default compiler backend. If you use it, which is
 " strongly recommended, you probably don't need to configure anything. If you
 " want another compiler backend, you can change it as follows. The list of
 " supported backends and further explanation is provided in the documentation,
-" see ":help vimtex-compiler".
-let g:vimtex_compiler_method = 'latexrun'
+" see ':help vimtex-compiler'.
+
+let g:vimtex_compiler_method = 'latexmk'
+"
+let g:vimtex_compiler_latexmk = { 
+        \ 'executable' : 'latexmk',
+        \ 'options' : [ 
+        \   '-xelatex',
+        \   '-file-line-error',
+        \   '-synctex=1',
+        \   '-interaction=nonstopmode',
+        \ ],
+        \}
+
+"let g:vimtex_compiler_latexmk_engines = '-pdf -pdflatex="texexec --xtx"'
+"{
+"     '_'                : '-pdf',
+"     'pdfdvi'           : '-pdfdvi',
+"     'pdfps'            : '-pdfps',
+"     'pdflatex'         : '-pdf',
+"     'luatex'           : '-lualatex',
+"     'lualatex'         : '-lualatex',
+"     'xelatex'          : '-xelatex',
+"     'context (pdftex)' : '-pdf -pdflatex=texexec',
+"     'context (luatex)' : '-pdf -pdflatex=context',
+"     'context (xetex)'  : '-pdf -pdflatex=''texexec --xtx''',
+"    }
 
 " Most VimTeX mappings rely on localleader and this can be changed with the
-" following line. The default is usually fine and is the symbol "\".
-let maplocalleader = ","
+" following line. The default is usually fine and is the symbol '\'.
+let maplocalleader = '\'
+
 " ////////////////////////////////////////////////////////////
-"
+"             folding better CONFIGURATION
+"    plegamiento customizado permite ver el bigger picture
+"    setlocal foldmethod=indent
+
+set nofoldenable
+set foldlevel=99
+set fillchars=fold:\
+set foldtext=CustomFoldText()
+setlocal foldmethod=expr
+setlocal foldexpr=GetPotionFold(v:lnum)
+function! GetPotionFold(lnum)
+  if getline(a:lnum) =~? '\v^\s*$'
+    return '-1'
+  endif
+  let this_indent = IndentLevel(a:lnum)
+  let next_indent = IndentLevel(NextNonBlankLine(a:lnum))
+  if next_indent == this_indent
+    return this_indent
+  elseif next_indent < this_indent
+    return this_indent
+  elseif next_indent > this_indent
+    return '>' . next_indent
+  endif
+endfunction
+function! IndentLevel(lnum)
+    return indent(a:lnum) / &shiftwidth
+endfunction
+function! NextNonBlankLine(lnum)
+  let numlines = line('$')
+  let current = a:lnum + 1
+  while current <= numlines
+      if getline(current) =~? '\v\S'
+          return current
+      endif
+      let current += 1
+  endwhile
+  return -2
+endfunction
+function! CustomFoldText()
+  " get first non-blank line
+  let fs = v:foldstart
+  while getline(fs) =~ '^\s*$' | let fs = nextnonblank(fs + 1)
+  endwhile
+  if fs > v:foldend
+      let line = getline(v:foldstart)
+  else
+      let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
+  endif
+  let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
+  let foldSize = 1 + v:foldend - v:foldstart
+  let foldSizeStr = " " . foldSize . " lines "
+  let foldLevelStr = repeat("+--", v:foldlevel)
+  let expansionString = repeat(" ", w - strwidth(foldSizeStr.line.foldLevelStr))
+  return line . expansionString . foldSizeStr . foldLevelStr
+endfunction
+" ////////////////////////////////////////////////////
 " ////////////////////////////////////////////////////////////
-"                  NVIM - LATEX CONFIGURATION
-"               Dabbling with latex to improve my CV
+"             some fancy package CONFIGURATION
+"                 What is this shit for?
 " ////////////////////////////////////////////////////////////
