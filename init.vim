@@ -53,6 +53,11 @@ Plug 'natebosch/vim-lsc-dart'
 " Next gen motion plugin
 Plug 'ggandor/lightspeed.nvim'
 
+" Comrade Vim!: Brings JetBrains/IntelliJ IDEs magic to Neovim with minimal setup. 
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+Plug 'beeender/Comrade'
+
 call plug#end()
 
 " ////////////////////////////////////////////////////////////
