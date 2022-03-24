@@ -50,6 +50,8 @@ Plug 'thosakwe/vim-flutter'
 Plug 'natebosch/vim-lsc'
 Plug 'natebosch/vim-lsc-dart'
 
+" Next gen motion plugin
+Plug 'ggandor/lightspeed.nvim'
 
 call plug#end()
 
@@ -381,6 +383,11 @@ function! CustomFoldText()
   return line . expansionString . foldSizeStr . foldLevelStr
 endfunction
 " ////////////////////////////////////////////////////
+"		 Hop- configuration
+"		Neovim motions on speed 
+"http://neovimcraft.com/plugin/phaazon/hop.nvim/index.html
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" ////////////////////////////////////////////////////////////
 " ////////////////////////////////////////////////////////////
 "             some fancy package CONFIGURATION
 "                 What is this shit for?
