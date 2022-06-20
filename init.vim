@@ -13,23 +13,24 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}  " plugin for manage autocomplet
 
 " /////////////////////////////////
 " Plugins to improve user experience (the goal is VIM as a fully fledged IDE)
-Plug 'Chiel92/vim-autoformat'  " Format code with one button press (or automatically on save).
+Plug 'Chiel92/vim-autoformat'          " Format code with one button press (or automatically on save).
 
-Plug 'jiangmiao/auto-pairs'  " Plugin to automatically include final enclosing symbol with any starting one
+Plug 'jiangmiao/auto-pairs'            " Plugin to automatically include final enclosing symbol with any starting one
 
 Plug 'tpope/vim-surround'              " Plugin to easily modify brackets
 
-Plug 'alvan/vim-closetag'  " Similar to autopairs but for html-style tags
+Plug 'alvan/vim-closetag'              " Similar to autopairs but for html-style tags
 
 Plug 'scrooloose/nerdtree'             " File explorer within nvim
 
-Plug 'Yggdroot/indentLine'            " Muestra los niveles de indentación con lineas verticales 
+Plug 'Yggdroot/indentLine'             " Muestra los niveles de indentación con lineas verticales 
 
 Plug 'joshdick/onedark.vim'            " color theme inspired in atom
 
 " /////////////////////////////////
 " live coding
 Plug 'tidalcycles/vim-tidal'           " plugin to run tidal within nvim
+
 Plug 'suzanje/foxdot-nvim'             " run FoxDot in vim
 
 " arduino
@@ -57,6 +58,10 @@ Plug 'ggandor/lightspeed.nvim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 Plug 'beeender/Comrade'
+
+" Vim telescope: Find, Filter, Preview, Pick
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 call plug#end()
 
